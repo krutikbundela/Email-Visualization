@@ -1,0 +1,23 @@
+    :root{
+        --bg-color: #DFF2FF;
+        --text-color: #3e6fe1;
+    }
+
+    .link{
+        width: 100%;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .css-rizt0-MuiTypography-root-dashboard {
+        color: var(--text-color) !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+
+    }
+    .active{
+        color: var(--text-color);
+        border-radius: 20px !important;
+    background-color: var(--bg-color) !important; 
+    }

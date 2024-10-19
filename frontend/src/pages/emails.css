@@ -1,0 +1,183 @@
+:root {
+  --Accent: #e54065;
+  --Background: #f4f5f9;
+  --Border: #cfd2dc;
+  --Text: #636363;
+  --Filter_Button: #e1e4ea;
+  --Read_Background: #f2f2f2;
+}
+
+body {
+  background-color: var(--Background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.align-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+.align-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+nav {
+  margin-top: 10px;
+  padding: 6px 20px;
+  height: 40px;
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  .filter-links {
+    margin-left: 30px;
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: var(--Filter_Button);
+    padding: 3px 5px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+}
+
+.scroll-effect {
+  overflow-y: scroll;
+  scrollbar-color: transparent transparent;
+}
+
+.scroll-effect::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-effect::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-effect::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.email-list {
+  padding: 0px 10px;
+  height: 110vh;
+
+  .email-list-card {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid var(--Border);
+    height: fit-content;
+    padding: 7px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+
+    .email-list-card-content {
+      width: 94%;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Ensures the content grows within the container */
+      overflow: hidden;
+    }
+
+    .favorite {
+      margin-left: 20px;
+      font-weight: 500;
+      color: var(--Accent);
+    }
+  }
+
+  .css-1c5o7vy-MuiPagination-ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .css-1bug3cd-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    color: #fff;
+    background-color: var(--Accent);
+    border: 1px solid black;
+  }
+  .selected-border {
+    border: 2px solid var(--Accent);
+  }
+
+  .read-bgcolor {
+    background-color: var(--Read_Background);
+  }
+
+  font-size: 14px;
+
+  .text-gray {
+    color: var(--Text);
+  }
+
+  .text-gray-bold {
+    color: var(--Text);
+    font-weight: bold;
+    margin-left: 2px;
+  }
+}
+
+.email {
+  background-color: white;
+  border: 1px solid var(--Border);
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+  margin: 20px 20px;
+  height: 100vh;
+  overflow: hidden;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    height: 70px;
+    width: 100%;
+
+    .subject {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--Text);
+    }
+    .date-time {
+      color: var(--Text);
+    }
+
+    button.favorite-button {
+      background-color: var(--Accent);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      height: fit-content;
+    }
+  }
+
+  section {
+    p {
+      margin-left: 6.7%;
+      color: gray;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 1.5rem;
+    }
+  }
+}
