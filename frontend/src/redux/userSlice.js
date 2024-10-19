@@ -43,10 +43,18 @@ export const loadUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk("user/logout", async () => {
-  const response = await api.post("/logout");
-  return response.data;
-});
+export const logoutUser = createAsyncThunk(
+  "user/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/logout");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message || error.message);
+    }
+    
+  }
+);
 
 const initialState = {
   user: null,
@@ -112,7 +120,6 @@ export const authSlice = createSlice({
       .addCase(logoutUser.pending, (state) => {
         state.isUserLoading = true;
         state.isUserError = null;
-        state.isAuthenticated = true;
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;

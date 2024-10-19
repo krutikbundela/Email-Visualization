@@ -43,6 +43,7 @@ export const loadUser = catchAsyncError(async (req, res, next) => {
       user,
     });
 });
+
 export const logout = catchAsyncError(async (req,res,next) =>{
     res.cookie("token", null, {
       expires: new Date(Date.now()),

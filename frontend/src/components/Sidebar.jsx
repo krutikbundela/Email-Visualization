@@ -21,8 +21,10 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/userSlice";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 
 const drawerWidth = 240;
 
@@ -51,6 +53,7 @@ export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.user);
 
   const handleDrawerOpen = () => {
@@ -60,6 +63,12 @@ export default function Sidebar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleLogOut = () =>{
+    dispatch(logoutUser()).finally(()=>{
+      navigate("/signin");
+    })
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -114,20 +123,28 @@ export default function Sidebar() {
                 <ListItemIcon>
                   <DashboardOutlinedIcon color="primary" />
                 </ListItemIcon>
-                <ListItemText className="css-rizt0-MuiTypography-root-dashboard " primary="Dashboard" />
+                <ListItemText
+                  className="css-rizt0-MuiTypography-root-dashboard "
+                  primary="Dashboard"
+                />
               </ListItemButton>
             </Link>
           </ListItem>
           <ListItem>
             <Link
               to="/emails"
-              className={`link ${location.pathname === "/emails" ? "active" : ""}`}
+              className={`link ${
+                location.pathname === "/emails" ? "active" : ""
+              }`}
             >
               <ListItemButton>
                 <ListItemIcon>
-                  <DashboardOutlinedIcon color="primary" />
+                  <EmailOutlinedIcon color="primary" />
                 </ListItemIcon>
-                <ListItemText className="css-rizt0-MuiTypography-root-dashboard " primary="Emails" />
+                <ListItemText
+                  className="css-rizt0-MuiTypography-root-dashboard "
+                  primary="Emails"
+                />
               </ListItemButton>
             </Link>
           </ListItem>
@@ -142,7 +159,10 @@ export default function Sidebar() {
                 <ListItemIcon>
                   <AccountCircleOutlinedIcon color="primary" />
                 </ListItemIcon>
-                <ListItemText className="css-rizt0-MuiTypography-root-dashboard " primary="Profile" />
+                <ListItemText
+                  className="css-rizt0-MuiTypography-root-dashboard "
+                  primary="Profile"
+                />
               </ListItemButton>
             </Link>
           </ListItem>
@@ -162,7 +182,10 @@ export default function Sidebar() {
                     <ListItemIcon>
                       <HowToRegOutlinedIcon color="primary" />
                     </ListItemIcon>
-                    <ListItemText className="css-rizt0-MuiTypography-root-dashboard " primary="Sign Up" />
+                    <ListItemText
+                      className="css-rizt0-MuiTypography-root-dashboard "
+                      primary="Sign Up"
+                    />
                   </ListItemButton>
                 </Link>
               </ListItem>
@@ -177,7 +200,10 @@ export default function Sidebar() {
                     <ListItemIcon>
                       <LockOpenOutlinedIcon color="primary" />
                     </ListItemIcon>
-                    <ListItemText className="css-rizt0-MuiTypography-root-dashboard " primary="Sign In" />
+                    <ListItemText
+                      className="css-rizt0-MuiTypography-root-dashboard "
+                      primary="Sign In"
+                    />
                   </ListItemButton>
                 </Link>
               </ListItem>
@@ -185,11 +211,14 @@ export default function Sidebar() {
           )}
           {isAuthenticated && (
             <ListItem>
-              <ListItemButton>
+              <ListItemButton onClick={handleLogOut}>
                 <ListItemIcon>
                   <LoginOutlinedIcon color="primary" />
                 </ListItemIcon>
-                <ListItemText className="css-rizt0-MuiTypography-root-dashboard " primary="Log Out" />
+                <ListItemText
+                  className="css-rizt0-MuiTypography-root-dashboard "
+                  primary="Log Out"
+                />
               </ListItemButton>
             </ListItem>
           )}
