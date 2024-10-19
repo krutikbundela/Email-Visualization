@@ -11,24 +11,28 @@ const Charts = ({ data }) => {
     <Paper
       elevation={1}
       sx={{
-        marginTop: "30px",
+        margin: "30px 0px",
         width: "100%",
-        height:"fit-content",
+        height: "fit-content",
         padding: "20px",
         display: "flex",
-        flexDirection:{xs:"column",md:"row"},
-        backgroundColor: "#DFF2FF",
+        flexDirection: { sm:"column" ,xs: "column", md: "row" ,xl:"row" },
+        backgroundColor: "#EBF4F6",
       }}
     >
       <Paper
         elevation={3}
-        sx={{ width: "90%", padding: "20px", margin: "10px" }}
+        sx={{
+          width: "90%",
+          padding: "20px",
+          margin: "10px",
+        }}
       >
-      <BarChart
-        totalFeatures={totalFeatures}
-        setSelectedFeature={setSelectedFeature}
-      />
-        </Paper>
+        <BarChart
+          totalFeatures={totalFeatures}
+          setSelectedFeature={setSelectedFeature}
+        />
+      </Paper>
       <Paper
         elevation={3}
         sx={{ width: "90%", padding: "20px", margin: "10px" }}

@@ -41,7 +41,7 @@ export default function Filters() {
   ]);
   const [localAgeGroup, setLocalAgeGroup] = useState(ageGroup || ""); // Local state for age group
   const [localGender, setLocalGender] = useState(gender || ""); // Local state for gender
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isMobile = useMediaQuery("(max-width: 900px)"); // For mobile responsiveness
 
   // Update local date state when Redux preferences are loaded
   useEffect(() => {
@@ -73,12 +73,11 @@ export default function Filters() {
     setLocalGender("");
   };
 
-const formatDateToMidnight = (date) => {
-  const offset = date.getTimezoneOffset() * 60000; // Offset in milliseconds
-  const localDate = new Date(date.getTime() - offset);
-  return localDate.toISOString().split("T")[0]; // Return in YYYY-MM-DD format
-};
-
+  const formatDateToMidnight = (date) => {
+    const offset = date.getTimezoneOffset() * 60000; // Offset in milliseconds
+    const localDate = new Date(date.getTime() - offset);
+    return localDate.toISOString().split("T")[0]; // Return in YYYY-MM-DD format
+  };
 
   const handleApplyFilters = () => {
     const preferences = {
@@ -99,28 +98,44 @@ const formatDateToMidnight = (date) => {
       sx={{
         padding: 3,
         borderRadius: 2,
-        width: "100%",
+        width: isMobile ? "100%" : "100%",
         margin: "auto",
         display: "flex",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
         backgroundColor: "#DFF2FF",
       }}
     >
-      <Box sx={{ mb: 3 }}>
+      <Box
+        sx={{
+          mb: 3,
+          width: isMobile ? "100%" : "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <DateRangePicker
           onChange={(item) => setLocalDate([item.selection])} // Update local date range state
           showSelectionPreview={true}
           moveRangeOnFirstSelection={false}
           ranges={localDate}
-          months={2}
+          months={isMobile ? 1 : 2} // Show 1 month view on mobile, 2 on larger screens
           direction={isMobile ? "vertical" : "horizontal"}
-          rangeColors={["#3f51b5"]}
+          rangeColors={["#3e6fe1"]}
         />
       </Box>
-      <Box sx={{ display:"flex" , width :" 70%" , justifyContent:"space-evenly"}}>
-        <FormControl sx={{ mb: 3 }}>
+
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-evenly",
+          flexDirection: "row",
+        }}
+      >
+        <FormControl sx={{ mb: isMobile ? 2 : 0 }}>
           <FormLabel
             sx={{ fontSize: "16px", fontWeight: "550", color: "black" }}
           >
@@ -131,7 +146,8 @@ const formatDateToMidnight = (date) => {
             <FormControlLabel value=">25" control={<Radio />} label=">25" />
           </RadioGroup>
         </FormControl>
-        <FormControl sx={{ mb: 3 }}>
+
+        <FormControl sx={{ mb: isMobile ? 2 : 0 }}>
           <FormLabel
             sx={{ fontSize: "16px", fontWeight: "550", color: "black" }}
           >
@@ -147,17 +163,20 @@ const formatDateToMidnight = (date) => {
           </RadioGroup>
         </FormControl>
       </Box>
+
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
-          width:"90%",
+          flexDirection: isMobile ? "column" : "row", // Stack buttons on mobile
+          width: isMobile ? "100%" : "90%",
+          justifyContent: isMobile ? "space-between" : "space-evenly",
         }}
       >
         <Button
           variant="contained"
           color="primary"
           onClick={handleApplyFilters}
+          sx={{ width: isMobile ? "100%" : "45%", mb: isMobile ? 1 : 0 }}
         >
           Apply Filters
         </Button>
@@ -165,7 +184,7 @@ const formatDateToMidnight = (date) => {
           variant="contained"
           color="secondary"
           onClick={handleReset}
-          sx={{ mt: 2 }}
+          sx={{ width: isMobile ? "100%" : "45%", mb: isMobile ? 1 : 0 }}
         >
           Reset Filters
         </Button>

@@ -12,7 +12,7 @@ import { loadPreferences } from "../redux/preferenceSlice";
 const Dashboard = () => {
   const [newFilteredData, setNewFilteredData] = useState([]);
   const [totalFeatures, setTotalFeatures] = useState({});
-  const [isProcessed, setIsProcessed] = useState(false); // Track if data processing is done
+  const [isProcessed, setIsProcessed] = useState(false);
   const dispatch = useDispatch();
   const { data, isLoading } = useSelector((state) => state.data);
   const { startDate, endDate, ageGroup, gender } = useSelector((state) => state.preferences);
@@ -29,7 +29,7 @@ const Dashboard = () => {
       const { totalFeatures, newFilteredData } = FilterData(data);
       setTotalFeatures(totalFeatures);
       setNewFilteredData(newFilteredData);
-      setIsProcessed(true); // Set the processing flag to true after data is processed
+      setIsProcessed(true);
     }
   }, [isLoading, data]);
 
@@ -37,7 +37,6 @@ const Dashboard = () => {
     const totalFeatures = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
 
     const newFilteredData = data.map((item) => {
-      // Sum the feature values
       totalFeatures.A += item.features.A;
       totalFeatures.B += item.features.B;
       totalFeatures.C += item.features.C;
@@ -45,10 +44,9 @@ const Dashboard = () => {
       totalFeatures.E += item.features.E;
       totalFeatures.F += item.features.F;
 
-      // Return a new object with formatted day
       return {
         ...item,
-        day: new Date(item.day).toISOString().split("T")[0], // Format date to YYYY-MM-DD
+        day: new Date(item.day).toISOString().split("T")[0],
       };
     });
 
@@ -69,7 +67,6 @@ const Dashboard = () => {
       window.location.origin
     }/share?${queryParams.toString()}`;
 
-    // Option 1: Copy the URL to the clipboard
     navigator.clipboard.writeText(shareableURL).then(() => {
       alert("Shareable link copied to clipboard!");
     });

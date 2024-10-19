@@ -13,7 +13,6 @@ import {
   Filler,
   TimeScale,
 } from "chart.js";
-import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-moment";
 
 ChartJS.register(
@@ -27,12 +26,11 @@ ChartJS.register(
   PointElement,
   Filler,
   TimeScale,
-  zoomPlugin
 );
 
 const BarChart = ({ totalFeatures, setSelectedFeature }) => {
   const labels = Object.keys(totalFeatures || {});
-  const salesData = Object.values(totalFeatures || {});
+  const TotalTimeSpent = Object.values(totalFeatures || {});
 
   const [highlightedIndex, setHighlightedIndex] = useState(null);
 
@@ -40,10 +38,10 @@ const BarChart = ({ totalFeatures, setSelectedFeature }) => {
     labels: labels,
     datasets: [
       {
-        label: "Total Sales",
-        data: salesData,
+        label: "Total Time Spent",
+        data: TotalTimeSpent,
         backgroundColor: labels.map((_, index) =>
-          index === highlightedIndex ? "blue" : "rgba(75, 192, 192, 0.6)"
+          index === highlightedIndex ? "#071952" : "#088395"
         ),
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -52,6 +50,7 @@ const BarChart = ({ totalFeatures, setSelectedFeature }) => {
   };
 
   const options = {
+    responsive: true,
     indexAxis: "y",
     scales: {
       x: {
@@ -61,6 +60,7 @@ const BarChart = ({ totalFeatures, setSelectedFeature }) => {
           text: "Total Sales",
         },
       },
+      responsive: true,
       y: {
         title: {
           display: true,
@@ -71,7 +71,6 @@ const BarChart = ({ totalFeatures, setSelectedFeature }) => {
     onClick: (event, activeElements) => {
       if (activeElements.length > 0) {
         const index = activeElements[0].index;
-        // Toggle the selection
         if (highlightedIndex === index) {
           setHighlightedIndex(null);
           setSelectedFeature(null);
