@@ -21,33 +21,29 @@ import "react-date-range/dist/theme/default.css";
 export default function Filters() {
   const dispatch = useDispatch();
 
-  // Load saved preferences from Redux when the component mounts
   useEffect(() => {
     dispatch(loadPreferences());
   }, [dispatch]);
 
-  // Get the saved preferences from Redux
   const { startDate, endDate, ageGroup, gender } = useSelector(
     (state) => state.preferences
   );
 
-  // Local state for filters, which will only update Redux on apply
   const [localDate, setLocalDate] = useState([
     {
-      startDate: new Date(startDate), // Ensure proper date parsing from Redux
+      startDate: new Date(startDate),
       endDate: new Date(endDate),
       key: "selection",
     },
   ]);
-  const [localAgeGroup, setLocalAgeGroup] = useState(ageGroup || ""); // Local state for age group
-  const [localGender, setLocalGender] = useState(gender || ""); // Local state for gender
-  const isMobile = useMediaQuery("(max-width: 900px)"); // For mobile responsiveness
+  const [localAgeGroup, setLocalAgeGroup] = useState(ageGroup || ""); 
+  const [localGender, setLocalGender] = useState(gender || "");
+  const isMobile = useMediaQuery("(max-width: 900px)");
 
-  // Update local date state when Redux preferences are loaded
   useEffect(() => {
     setLocalDate([
       {
-        startDate: new Date(startDate), // Ensure proper date parsing from Redux
+        startDate: new Date(startDate),
         endDate: new Date(endDate),
         key: "selection",
       },
@@ -55,11 +51,11 @@ export default function Filters() {
   }, [startDate, endDate]);
 
   const handleAgeGroupChange = (event) => {
-    setLocalAgeGroup(event.target.value); // Update local age group state
+    setLocalAgeGroup(event.target.value);
   };
 
   const handleGenderChange = (event) => {
-    setLocalGender(event.target.value); // Update local gender state
+    setLocalGender(event.target.value);
   };
 
   const handleReset = () => {
@@ -74,21 +70,19 @@ export default function Filters() {
   };
 
   const formatDateToMidnight = (date) => {
-    const offset = date.getTimezoneOffset() * 60000; // Offset in milliseconds
+    const offset = date.getTimezoneOffset() * 60000;
     const localDate = new Date(date.getTime() - offset);
-    return localDate.toISOString().split("T")[0]; // Return in YYYY-MM-DD format
+    return localDate.toISOString().split("T")[0];
   };
 
   const handleApplyFilters = () => {
     const preferences = {
-      startDate: formatDateToMidnight(localDate[0].startDate), // Corrected for time zone issue
-      endDate: formatDateToMidnight(localDate[0].endDate), // Corrected for time zone issue
+      startDate: formatDateToMidnight(localDate[0].startDate),
+      endDate: formatDateToMidnight(localDate[0].endDate),
       ageGroup: localAgeGroup,
       gender: localGender,
     };
-    // Save preferences in Redux and cookies
     dispatch(setPreferences(preferences));
-    // Fetch data based on applied preferences
     dispatch(fetchData(preferences));
   };
 
@@ -117,11 +111,11 @@ export default function Filters() {
         }}
       >
         <DateRangePicker
-          onChange={(item) => setLocalDate([item.selection])} // Update local date range state
+          onChange={(item) => setLocalDate([item.selection])}
           showSelectionPreview={true}
           moveRangeOnFirstSelection={false}
           ranges={localDate}
-          months={isMobile ? 1 : 2} // Show 1 month view on mobile, 2 on larger screens
+          months={isMobile ? 1 : 2}
           direction={isMobile ? "vertical" : "horizontal"}
           rangeColors={["#3e6fe1"]}
         />
@@ -167,7 +161,7 @@ export default function Filters() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: isMobile ? "column" : "row", // Stack buttons on mobile
+          flexDirection: isMobile ? "column" : "row",
           width: isMobile ? "100%" : "90%",
           justifyContent: isMobile ? "space-between" : "space-evenly",
         }}

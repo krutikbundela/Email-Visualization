@@ -77,19 +77,14 @@ const Dashboard = () => {
       <Typography> {user ? user.name : ""} </Typography>
       <Box
         sx={{
-          width: {
-            xs: "100%", // mobile (extra-small)
-            sm: "100%", // small
-            md: "100%", // medium (tablet)
-            lg: "100%", // large (desktop)
-          },
+          width: "100%",
           height: {
-            xs: "150px", // shorter height on mobile
-            sm: "180px", // small devices
+            xs: "fit-content", // shorter height on mobile
+            sm: "fit-content", // small devices
             md: "200px", // default height on larger screens
           },
           display: "flex",
-          flexDirection: { sm: "column",md: "row", xl: "row" },
+          flexDirection: { sm: "column", xs: "column", md: "row", xl: "row" },
           justifyContent: {
             xs: "center", // center content on mobile
             sm: "flex-start", // align to the left on small screens and above
@@ -100,6 +95,7 @@ const Dashboard = () => {
         <Paper
           elevation={3}
           sx={{
+            width: { sm: "100%", xs: "100%", md: "auto" },
             height: "100%",
           }}
         >
@@ -117,20 +113,21 @@ const Dashboard = () => {
             width: "100%",
             height: "100%",
             display: "flex",
-            flexDirection: {sm: "column", md: "row", xl: "row" },
+            flexDirection: { sm: "column" ,xs:"column", md: "row", xl: "row" },
             justifyContent: "space-evenly",
             alignItems: "center",
           }}
         >
           <Paper
-            evaluation={4}
+            evaluation={1}
             sx={{
+              width: { sm: "100%", xs: "100%", md: "auto" },
               height: "80%",
               p: 2,
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: {sm:"flex-start",md:"space-between"},
               alignItems: "center",
-              flexDirection: "column",
+              flexDirection: { sm: "row", xs: "row", md: "column" },
             }}
           >
             <Button variant="contained">
@@ -138,22 +135,26 @@ const Dashboard = () => {
               Date Range
             </Button>
             <Typography
+              className="active"
               sx={{
-                fontSize: "1.5rem",
+                p: 1,
+                fontSize: { sm: "1rem", xs: "1rem", md: "1.5rem" },
+                ml: { sm: "10px", xs: "10px" },
                 fontStyle: "bold",
                 fontWeight: "500",
               }}
             >{`${startDate} TO ${endDate}`}</Typography>
           </Paper>
           <Paper
-            evaluation={4}
+            evaluation={1}
             sx={{
+              width: { sm: "100%", xs: "100%", md: "auto" },
               height: "80%",
               p: 2,
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: {sm:"flex-start",md:"space-between"},
               alignItems: "center",
-              flexDirection: "column",
+              flexDirection: { sm: "row", xs: "row", md: "column" },
             }}
           >
             <Button variant="contained">
@@ -161,22 +162,26 @@ const Dashboard = () => {
               Age Group
             </Button>
             <Typography
+              className="active"
               sx={{
-                fontSize: "1.5rem",
+                p: 1,
+                fontSize: { sm: "1rem", xs: "1rem", md: "1.5rem" },
+                ml: { sm: "10px", xs: "10px" },
                 fontStyle: "bold",
                 fontWeight: "500",
               }}
             >{`${ageGroup}`}</Typography>
           </Paper>
           <Paper
-            evaluation={4}
+            evaluation={1}
             sx={{
+              width: { sm: "100%", xs: "100%", md: "auto" },
               height: "80%",
               p: 2,
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: {sm:"flex-start",md:"space-between"},
               alignItems: "center",
-              flexDirection: "column",
+              flexDirection: { sm: "row", xs: "row", md: "column" },
             }}
           >
             <Button variant="contained">
@@ -184,8 +189,11 @@ const Dashboard = () => {
               Gender
             </Button>
             <Typography
+              className="active"
               sx={{
-                fontSize: "1.5rem",
+                p: 1,
+                fontSize: { sm: "1rem", xs: "1rem", md: "1.5rem" },
+                ml: { sm: "10px", xs: "10px" },
                 fontStyle: "bold",
                 fontWeight: "500",
               }}
@@ -195,6 +203,7 @@ const Dashboard = () => {
         <Paper
           elevation={3}
           sx={{
+            width: { sm: "100%", xs: "100%", md: "auto" },
             height: "100%",
           }}
         >
