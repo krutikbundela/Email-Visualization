@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://email-visualization.onrender.com/api/v1",
+  baseURL: "http://localhost:3000/api/v1",
   withCredentials: true,
 });
 

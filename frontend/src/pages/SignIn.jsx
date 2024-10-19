@@ -118,11 +118,14 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid>
-              <Link href={
+              <Link
+                href={
                   redirectUrl
                     ? `/signup?redirect=${encodeURIComponent(redirectUrl)}`
                     : "/signup"
-                } variant="body2">
+                }
+                variant="body2"
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

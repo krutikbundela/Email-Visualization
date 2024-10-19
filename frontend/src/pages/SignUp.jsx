@@ -20,35 +20,40 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-   const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-   // Create local state to store email and password
-   const [name, setName] = useState("");
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
-   const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-   const handleMouseDownPassword = (event) => {
-     event.preventDefault();
-   };
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
+  const searchParams = new URLSearchParams(location.search);
+  const redirectUrl = searchParams.get("redirect");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userData = { name, email, password };
 
-   const handleMouseUpPassword = (event) => {
-     event.preventDefault();
-   };
+    dispatch(registerUser(userData));
 
-   // Handle form submission
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     const userData = { name , email, password };
-
-     // Dispatch the loginUser action with the form data
-     dispatch(registerUser(userData));
-   };
+    if (redirectUrl) {
+      navigate(decodeURIComponent(redirectUrl));
+    } else {
+      navigate("/");
+    }
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -128,7 +133,14 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link
+                href={
+                  redirectUrl
+                    ? `/signin?redirect=${encodeURIComponent(redirectUrl)}`
+                    : "/signin"
+                }
+                variant="body2"
+              >
                 Already have an account? Sign in
               </Link>
             </Grid>
