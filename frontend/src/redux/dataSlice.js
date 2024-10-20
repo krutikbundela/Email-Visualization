@@ -19,7 +19,6 @@ export const fetchData = createAsyncThunk(
         gender,
       },
     });
-    console.log("response:", response.data);
     return response.data;
   }
 );

@@ -21,12 +21,12 @@ const initialState = {
   isError: null,
   emailBody: {},
   selectedEmailId: "",
-  read: [],
+  reads: [],
   favorites: [],
   filters: {
     read: false,
     unread: false,
-    favorites: false,
+    favorite: false,
   },
   currentPage: 1,
   totalPages: 2,
@@ -43,7 +43,7 @@ const emailSlice = createSlice({
       state.selectedEmailId = "";
     },
     markAsRead: (state, action) => {
-      state.read.push(action.payload);
+      state.reads.push(action.payload);
     },
     toggleFavorite: (state, action) => {
       const emailId = action.payload;

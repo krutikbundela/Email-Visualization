@@ -6,7 +6,7 @@ const FilterNav = () => {
 
   const {filters} = useSelector((state) => state.emails);
 
-  const {read , unread , favorites} = filters;
+  const {read , unread , favorite} = filters;
 
   const handleFilters = (filter) =>{
    switch (filter) {
@@ -15,7 +15,7 @@ const FilterNav = () => {
          setFilter({
            unread: !unread, 
            read: false,
-           favorites: false,
+           favorite: false,
          })
        );
        break;
@@ -24,16 +24,16 @@ const FilterNav = () => {
          setFilter({
            unread: false,
            read: !read,
-           favorites: false,
+           favorite: false,
          })
        );
        break;
-     case "favorites":
+     case "favorite":
        dispatch(
          setFilter({
            unread: false,
            read: false,
-           favorites: !favorites,
+           favorite: !favorite,
          })
        );
        break;
@@ -59,8 +59,8 @@ const FilterNav = () => {
           Read
         </p>
         <p
-          className={`filter-links ${favorites ? "active" : ""}`}
-          onClick={() => handleFilters("favorites")}
+          className={`filter-links ${favorite ? "active" : ""}`}
+          onClick={() => handleFilters("favorite")}
         >
           Favorites
         </p>

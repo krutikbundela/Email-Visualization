@@ -17,12 +17,14 @@ const Emails = () => {
        emails,
        selectedEmailId,
        filters,
-       read,
+       reads,
        favorites,
        isLoading,
        currentPage,
        totalPages,
      } = useSelector((state) => state.emails);
+
+     const { read, unread, favorite } = filters;
 
      useEffect(() => {
        dispatch(fetchEmails(currentPage));
@@ -35,10 +37,10 @@ const Emails = () => {
 
      const filteredEmails = emails.filter((email) => {
        if (filters.unread) {
-         return !read.includes(email.id);
+         return !reads.includes(email.id);
        } else if (filters.read) {
-         return read.includes(email.id);
-       } else if (filters.favorites) {
+         return reads.includes(email.id);
+       } else if (filters.favorite) {
          return favorites.includes(email.id);
        }
        return true;
@@ -60,12 +62,14 @@ const Emails = () => {
                 {filteredEmails.map((email) => (
                   <EmailListCard key={email.id} email={email} />
                 ))}
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  color="primary"
-                />
+                {read === false && unread === false && favorite === false && (
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                  />
+                )}
               </section>
             </Grid>
             {selectedEmailId !== "" && (

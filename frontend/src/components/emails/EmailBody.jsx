@@ -44,7 +44,7 @@ const EmailBody = () => {
                 backgroundColor: "#e54065",
               }}
             >
-              <Typography variant="body1">
+              <Typography variant="body1" color="white">
                 {emailContent.from.name[0]}
               </Typography>
             </Box>

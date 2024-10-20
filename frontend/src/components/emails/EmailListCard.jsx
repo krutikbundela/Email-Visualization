@@ -10,11 +10,11 @@ const EmailListCard = ({ email }) => {
   const { id, from, date, subject, short_description } = email;
   const dispatch = useDispatch();
 
-  const { selectedEmailId, read, favorites } = useSelector(
+  const { selectedEmailId, reads, favorites } = useSelector(
     (state) => state.emails
   );
 
-  const isRead = read.includes(id);
+  const isRead = reads.includes(id);
 
   const handleOpenEmail = (id) => {
     if (selectedEmailId === id) {
@@ -36,7 +36,7 @@ const EmailListCard = ({ email }) => {
         }}
         onClick={() => {
           handleOpenEmail(id);
-          if (!read.includes(id)) {
+          if (!reads.includes(id)) {
             dispatch(markAsRead(id));
           }
         }}
