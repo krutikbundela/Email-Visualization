@@ -92,7 +92,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <Typography> {user ? user.name : ""} </Typography>
       <Box
         sx={{
           width: "100%",
