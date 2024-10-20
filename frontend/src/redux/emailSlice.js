@@ -43,7 +43,13 @@ const emailSlice = createSlice({
       state.selectedEmailId = "";
     },
     markAsRead: (state, action) => {
-      state.reads.push(action.payload);
+      const emailId = action.payload;
+      if (!state.reads) {
+        state.reads = [];
+      }
+      if (!state.reads.includes(emailId)) {
+        state.reads.push(emailId);
+      }
     },
     toggleFavorite: (state, action) => {
       const emailId = action.payload;
