@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://email-visualization-frontend.onrender.com",
+    // origin: "https://email-visualization-frontend.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 ); // Adjust the frontend URL
