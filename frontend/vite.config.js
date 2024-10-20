@@ -6,8 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        // target: "https://email-visualization.onrender.com",
-        target: "http://localhost:3000",
+        target: "https://email-visualization.onrender.com",
+        // target: "http://localhost:3000",
         secure: false,
       },
     },

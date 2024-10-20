@@ -1,6 +1,5 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-// import bodyParser from 'body-parser';
 import errorMiddleware from "./middleware/errors.js"
 import dotenv from "dotenv";
 import cors from 'cors';
@@ -12,13 +11,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    // origin: "https://email-visualization-frontend.onrender.com",
-    origin: "http://localhost:5173",
+    origin: "https://email-visualization-frontend.onrender.com",
+    // origin: "http://localhost:5173",
     credentials: true,
   })
-); // Adjust the frontend URL
-// app.use(express.urlencoded({ limit: "50mb", extended: true }));
-// app.use(bodyParser.urlencoded({ extended: true }));
+); 
 
 
 import user from "./routes/user.js";
