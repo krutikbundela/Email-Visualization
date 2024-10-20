@@ -10,7 +10,7 @@ const EmailListCard = ({ email }) => {
   const { id, from, date, subject, short_description } = email;
   const dispatch = useDispatch();
 
-  const { selectedEmailId, reads, favorites } = useSelector(
+  const { selectedEmailId, reads = [], favorites = [] } = useSelector(
     (state) => state.emails
   );
 
