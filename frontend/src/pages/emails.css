@@ -139,7 +139,7 @@ nav {
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   padding: 20px;
   margin: 20px 20px;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 
   header {
@@ -172,6 +172,7 @@ nav {
   }
 
   section {
+    height: fit-content;
     p {
       margin-left: 6.7%;
       color: gray;
