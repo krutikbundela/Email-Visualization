@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://email-visualization-frontend.onrender.com/",
+    origin: "https://email-visualization-frontend.onrender.com",
     credentials: true,
   })
 ); // Adjust the frontend URL
