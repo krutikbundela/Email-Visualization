@@ -22,8 +22,12 @@ function App() {
   const [isUserFetched, setIsUserFetched] = useState(false);
 
   useEffect(() => {
-    dispatch(loadUser()).finally(() => {
+    dispatch(loadUser()).then(() => {
       setIsUserFetched(true);
+      
+    }).catch((err) => {
+      console.log("dispatch ~ err:", err);
+      
     });
   }, [dispatch]);
 

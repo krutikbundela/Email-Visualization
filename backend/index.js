@@ -1,5 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import bodyParser from "body-parser";
 import errorMiddleware from "./middleware/errors.js"
 import dotenv from "dotenv";
 import cors from 'cors';
@@ -16,6 +17,8 @@ app.use(
     credentials: true,
   })
 ); 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 
 import user from "./routes/user.js";
