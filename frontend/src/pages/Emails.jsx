@@ -26,24 +26,30 @@ const Emails = () => {
      const { read, unread, favorite } = filters;
 
      useEffect(() => {
-       dispatch(fetchEmails(currentPage));
-       dispatch(fetchEmailBody(selectedEmailId));
+       if (currentPage) {
+         dispatch(fetchEmails(currentPage));
+       }
+       if (selectedEmailId) {
+         dispatch(fetchEmailBody(selectedEmailId));
+       }
      }, [dispatch, currentPage, selectedEmailId]);
 
      const handlePageChange = (event, value) => {
        dispatch(setPage(value));
      };
 
-     const filteredEmails = emails.filter((email) => {
-       if (filters.unread) {
-         return !reads.includes(email.id);
-       } else if (filters.read) {
-         return reads.includes(email.id);
-       } else if (filters.favorite) {
-         return favorites.includes(email.id);
-       }
-       return true;
-     });
+     const filteredEmails = Array.isArray(emails) // Check if emails is an array
+       ? emails.filter((email) => {
+           if (filters.unread) {
+             return !reads.includes(email.id);
+           } else if (filters.read) {
+             return reads.includes(email.id);
+           } else if (filters.favorite) {
+             return favorites.includes(email.id);
+           }
+           return true;
+         })
+       : []; 
   return (
     <>
       <Box>

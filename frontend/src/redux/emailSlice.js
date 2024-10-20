@@ -74,7 +74,7 @@ const emailSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchEmails.fulfilled, (state, action) => {
-        state.emails = action.payload;
+        state.emails = action.payload || [];
         state.isLoading = false;
 
         return state;

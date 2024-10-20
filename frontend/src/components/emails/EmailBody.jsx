@@ -8,13 +8,14 @@ import {
 } from "../../redux/emailSlice";
 
 const EmailBody = () => {
-  const { favorites, selectedEmailId, emailBody } =
-    useSelector((state) => state.emails);
+  const { emails , favorites, selectedEmailId, emailBody } = useSelector(
+    (state) => state.emails
+  );
   const cleanBody = emailBody.body?.replace(/<\/?div>/g, "").trim() || "";
 
-  const emailContent = useSelector((state) =>
-    state.emails.emails.find((e) => e.id === selectedEmailId)
-  );
+   const emailContent = Array.isArray(emails) // Check if emails is an array
+    ? emails.find((e) => e.id === selectedEmailId)
+    : null; // Default to null if not an array
   const dispatch = useDispatch();
 
   const handleFavorite = () => {
@@ -45,7 +46,7 @@ const EmailBody = () => {
               }}
             >
               <Typography variant="body1" color="white">
-                {emailContent.from.name[0]}
+                {emailContent?.from.name[0]}
               </Typography>
             </Box>
 
@@ -60,10 +61,10 @@ const EmailBody = () => {
                 height: "100%",
               }}
             >
-              <p className="subject">{emailContent.subject}</p>
+              <p className="subject">{emailContent?.subject}</p>
               <p className="date-time">
                 {" "}
-                {new Date(emailContent.date).toLocaleString("en-GB", {
+                {new Date(emailContent?.date).toLocaleString("en-GB", {
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric",
