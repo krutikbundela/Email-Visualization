@@ -58,7 +58,7 @@ const EmailListCard = ({ email }) => {
               //   mr: 5,
             }}
           >
-            <Typography variant="body1">{from.name[0]}</Typography>
+            <Typography variant="body1" sx={{color:"white"}}>{from.name[0]}</Typography>
           </Box>
         </Box>
 

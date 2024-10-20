@@ -11,7 +11,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { DateRangePicker } from "react-date-range";
-import { addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { setPreferences, loadPreferences } from "../redux/preferenceSlice";
 import { fetchData } from "../redux/dataSlice";

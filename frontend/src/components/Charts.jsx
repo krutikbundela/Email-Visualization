@@ -5,7 +5,7 @@ import LineChart from "./LineChart";
 
 const Charts = ({ data }) => {
   const { newFilteredData, totalFeatures } = data || {};
-  const [selectedFeature, setSelectedFeature] = useState(null); // State to track selected feature
+  const [selectedFeature, setSelectedFeature] = useState(null);
 
   return (
     <Paper

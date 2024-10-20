@@ -9,7 +9,6 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     if (isUserLoading === false && isAuthenticated === false) {
-    console.log("useEffect ~ (isUserLoading === false && isAuthenticated === false:", isUserLoading === false && isAuthenticated === false);
 
       const currentPath = location.pathname + location.search;
 

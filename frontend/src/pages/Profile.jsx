@@ -50,25 +50,6 @@ const Profile = () => {
                   margin: "1rem auto",
                 }}
               />
-              {/* <img src={user.avatar.url} alt={user.name} /> */}
-              {/* <Box
-                width="100%"
-                mt={6}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Link
-                  to="/profile/update"
-                  style={{
-                    textDecoration: "none",
-                  }}
-                >
-                  <Button variant="outlined" sx={{ Width: "30rem" }}>
-                    Edit Profile
-                  </Button>
-                </Link>
-              </Box> */}
             </Box>
             <br />
             <Divider />

@@ -120,7 +120,7 @@ export default function Sidebar() {
               to="/"
               className={`link ${location.pathname === "/" ? "active" : ""}`}
             >
-              <ListItemButton>
+              <ListItemButton onClick={handleDrawerClose}>
                 <ListItemIcon>
                   <DashboardOutlinedIcon color="primary" />
                 </ListItemIcon>
@@ -138,7 +138,7 @@ export default function Sidebar() {
                 location.pathname === "/emails" ? "active" : ""
               }`}
             >
-              <ListItemButton>
+              <ListItemButton onClick={handleDrawerClose}>
                 <ListItemIcon>
                   <EmailOutlinedIcon color="primary" />
                 </ListItemIcon>
@@ -156,7 +156,7 @@ export default function Sidebar() {
                 location.pathname === "/profile" ? "active" : ""
               }`}
             >
-              <ListItemButton>
+              <ListItemButton onClick={handleDrawerClose}>
                 <ListItemIcon>
                   <AccountCircleOutlinedIcon color="primary" />
                 </ListItemIcon>
@@ -179,7 +179,7 @@ export default function Sidebar() {
                     location.pathname === "/signup" ? "active" : ""
                   }`}
                 >
-                  <ListItemButton>
+                  <ListItemButton onClick={handleDrawerClose}>
                     <ListItemIcon>
                       <HowToRegOutlinedIcon color="primary" />
                     </ListItemIcon>
@@ -197,7 +197,7 @@ export default function Sidebar() {
                     location.pathname === "/signin" ? "active" : ""
                   }`}
                 >
-                  <ListItemButton>
+                  <ListItemButton onClick={handleDrawerClose}>
                     <ListItemIcon>
                       <LockOpenOutlinedIcon color="primary" />
                     </ListItemIcon>

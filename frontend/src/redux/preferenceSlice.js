@@ -24,12 +24,10 @@ export const fetchDefaultPreferences = createAsyncThunk(
 );
 
 
-// Check if preferences cookie exists
 const savedPreferences = Cookies.get("preferences");
 
-// Set initialState based on the existence of the cookie
 const initialState = savedPreferences
-  ? JSON.parse(savedPreferences) // If cookie exists, use its value
+  ? JSON.parse(savedPreferences)
   : {
       startDate: new Date(),
       endDate: addDays(new Date(), 7),

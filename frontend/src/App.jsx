@@ -15,7 +15,9 @@ import Profile from "./pages/Profile";
 
 function App() {
   const dispatch = useDispatch();
-  const { user , isUserLoading, isAuthenticated } = useSelector((state) => state.user);
+  const { user, isUserLoading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
 
   const [isUserFetched, setIsUserFetched] = useState(false);
 
@@ -26,7 +28,7 @@ function App() {
   }, [dispatch]);
 
   if (isUserLoading || !isUserFetched) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   const router = createBrowserRouter([
@@ -60,8 +62,6 @@ function App() {
 
   return (
     <>
-      
-
       <RouterProvider router={router} />
     </>
   );

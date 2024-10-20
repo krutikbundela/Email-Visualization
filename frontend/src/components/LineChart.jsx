@@ -36,17 +36,16 @@ const LineChart = ({ data, selectedFeature }) => {
     dayjs(item.day, "YYYY-MM-DD").toDate()
   );
 
-  // Define a consistent color palette that complements the bar chart
   const colorPalette = [
-    "#071952", // Dark blue (same as highlighted bar color)
-    "#088395", // Teal blue (same as regular bar color)
-    "#D1495B", // Coral red
-    "#EDAE49", // Golden yellow
-    "#00798C", // Deep cyan
-    "#30638E", // Slate blue
+    "#071952", 
+    "#088395", 
+    "#D1495B", 
+    "#EDAE49", 
+    "#00798C", 
+    "#30638E", 
   ];
 
-  // Prepare data for the line chart
+  
   const lineChartData = {
     labels: formattedDates,
     datasets: Object.keys(totalFeatures || {})
@@ -55,9 +54,7 @@ const LineChart = ({ data, selectedFeature }) => {
         label: feature,
         data: newFilteredData.map((item) => item.features[feature]),
         borderColor: colorPalette[index % colorPalette.length],
-        // backgroundColor: colorPalette[index % colorPalette.length] + "50", // Slightly transparent fill color
         tension: 0.1,
-        // fill: true, // Enable background fill
       })),
   };
 
@@ -87,26 +84,26 @@ const LineChart = ({ data, selectedFeature }) => {
        zoom: {
          wheel: {
            enabled: true,
-           speed: 0.05, // Lower the speed for less sensitive zoom
+           speed: 0.05, 
          },
          pinch: {
            enabled: true,
-           speed: 0.05, // Lower speed for pinch zoom
+           speed: 0.05, 
          },
          mode: "xy",
          rangeMin: {
            x: null,
-           y: 0, // Prevent zooming out beyond 0 on the y-axis
+           y: 0, 
          },
          rangeMax: {
            x: null,
-           y: 100, // Adjust this to limit the zoom-out level on the y-axis
+           y: 100, 
          },
        },
        pan: {
          enabled: true,
          mode: "xy",
-         speed: 10, // Lower panning speed for smoother control
+         speed: 10, 
        },
      },
    },
