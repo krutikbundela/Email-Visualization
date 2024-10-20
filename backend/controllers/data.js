@@ -39,28 +39,35 @@ export const getData = catchAsyncError(async (req, res, next) => {
     filter.gender = gender;
   }
 
-  let data;
+  const data = await Data.find(filter);
 
-  if (startDate && endDate) {
-    // If startDate and endDate are provided, query based on the filter
-    data = await Data.find(filter);
-  } else {
-    // If startDate and endDate are not provided
-    // Step 1: Find the latest date in the collection
-    const latestRecord = await Data.findOne().sort({ day: -1 });
-
-    if (latestRecord) {
-      // Step 2: Calculate the date range (last 7 days including the latest date)
-      const latestDate = new Date(latestRecord.day);
-      const seventhPreviousDate = new Date(latestDate);
-      seventhPreviousDate.setDate(latestDate.getDate() - 6); // Go back 6 days
-
-      // Step 3: Apply the calculated date range to the filter
-      filter.day = { $gte: seventhPreviousDate, $lte: latestDate };
-
-      // Step 4: Fetch records based on this new date range
-      data = await Data.find(filter).sort({ day: -1 });
-    }
-  }
   res.status(200).json(data);
+});
+
+export const getDefaultPreferences = catchAsyncError(async (req, res, next) => {
+  const latestRecord = await Data.findOne().sort({ day: -1 });
+
+  if (latestRecord) {
+    const latestDate = new Date(latestRecord.day);
+    const seventhPreviousDate = new Date(latestDate);
+    seventhPreviousDate.setDate(latestDate.getDate() - 6);
+
+    const ageGroups = await Data.distinct("age");
+    const genders = await Data.distinct("gender");
+
+    const randomAgeGroup =
+      ageGroups[Math.floor(Math.random() * ageGroups.length)];
+    const randomGender = genders[Math.floor(Math.random() * genders.length)];
+
+    const data = {
+      startDate: seventhPreviousDate.toISOString().split("T")[0],
+      endDate: latestDate.toISOString().split("T")[0],
+      ageGroup: randomAgeGroup,
+      gender: randomGender,
+    };
+
+    res.status(200).json({ success: true, data });
+  } else {
+    res.status(404).json({ success: false, message: "No data found" });
+  }
 });

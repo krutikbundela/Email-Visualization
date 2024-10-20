@@ -7,7 +7,8 @@ import { fetchData } from "../redux/dataSlice";
 import Charts from "../components/Charts";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import Loader from "../components/Loader";
-import { loadPreferences } from "../redux/preferenceSlice";
+import { fetchDefaultPreferences, loadPreferences } from "../redux/preferenceSlice";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
   const [newFilteredData, setNewFilteredData] = useState([]);
@@ -19,10 +20,18 @@ const Dashboard = () => {
   const { user, isAuthenticated, isUserLoading, isUserError } = useSelector(
     (state) => state.user
   );
-  useEffect(() => {
-    dispatch(loadPreferences());
-    dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
-  }, [dispatch, startDate, endDate, ageGroup, gender]);
+
+    useEffect(() => {
+      const savedPreferences = Cookies.get("preferences");
+      if (!savedPreferences) {
+        dispatch(fetchDefaultPreferences());
+        dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
+      } else {
+        dispatch(loadPreferences());
+        dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
+      }
+    }, [dispatch, startDate, endDate, ageGroup, gender]);
+
 
   useEffect(() => {
     if (!isLoading && data.length > 0) {
@@ -72,6 +81,15 @@ const Dashboard = () => {
     });
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure two-digit format
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`; // Format: dd-mm-yyyy
+  };
+
   return (
     <>
       <Typography> {user ? user.name : ""} </Typography>
@@ -79,15 +97,15 @@ const Dashboard = () => {
         sx={{
           width: "100%",
           height: {
-            xs: "fit-content", // shorter height on mobile
-            sm: "fit-content", // small devices
-            md: "200px", // default height on larger screens
+            xs: "fit-content",
+            sm: "fit-content",
+            md: "200px",
           },
           display: "flex",
           flexDirection: { sm: "column", xs: "column", md: "row", xl: "row" },
           justifyContent: {
-            xs: "center", // center content on mobile
-            sm: "flex-start", // align to the left on small screens and above
+            xs: "center",
+            sm: "flex-start",
           },
           alignItems: "center",
         }}
@@ -113,7 +131,7 @@ const Dashboard = () => {
             width: "100%",
             height: "100%",
             display: "flex",
-            flexDirection: { sm: "column" ,xs:"column", md: "row", xl: "row" },
+            flexDirection: { sm: "column", xs: "column", md: "row", xl: "row" },
             justifyContent: "space-evenly",
             alignItems: "center",
           }}
@@ -125,7 +143,7 @@ const Dashboard = () => {
               height: "80%",
               p: 2,
               display: "flex",
-              justifyContent: {sm:"flex-start",md:"space-between"},
+              justifyContent: { sm: "flex-start", md: "space-between" },
               alignItems: "center",
               flexDirection: { sm: "row", xs: "row", md: "column" },
             }}
@@ -143,7 +161,11 @@ const Dashboard = () => {
                 fontStyle: "bold",
                 fontWeight: "500",
               }}
-            >{`${startDate} TO ${endDate}`}</Typography>
+            >
+              {`${formatDate(startDate)} TO ${formatDate(
+                endDate
+              )}`}
+            </Typography>
           </Paper>
           <Paper
             evaluation={1}
@@ -152,7 +174,7 @@ const Dashboard = () => {
               height: "80%",
               p: 2,
               display: "flex",
-              justifyContent: {sm:"flex-start",md:"space-between"},
+              justifyContent: { sm: "flex-start", md: "space-between" },
               alignItems: "center",
               flexDirection: { sm: "row", xs: "row", md: "column" },
             }}
@@ -179,7 +201,7 @@ const Dashboard = () => {
               height: "80%",
               p: 2,
               display: "flex",
-              justifyContent: {sm:"flex-start",md:"space-between"},
+              justifyContent: { sm: "flex-start", md: "space-between" },
               alignItems: "center",
               flexDirection: { sm: "row", xs: "row", md: "column" },
             }}

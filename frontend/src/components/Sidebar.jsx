@@ -25,6 +25,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/userSlice";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import UserOptions from "./layout/UserOptions";
 
 const drawerWidth = 240;
 
@@ -54,7 +55,7 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { user ,isAuthenticated } = useSelector((state) => state.user);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -225,6 +226,7 @@ export default function Sidebar() {
         </List>
       </Drawer>
       <Main>
+        {isAuthenticated && <UserOptions user={user} />}
         <DrawerHeader />
         <Outlet />
       </Main>

@@ -58,17 +58,6 @@ export default function Filters() {
     setLocalGender(event.target.value);
   };
 
-  const handleReset = () => {
-    const defaultDateRange = {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    };
-    setLocalDate([defaultDateRange]);
-    setLocalAgeGroup("");
-    setLocalGender("");
-  };
-
   const formatDateToMidnight = (date) => {
     const offset = date.getTimezoneOffset() * 60000;
     const localDate = new Date(date.getTime() - offset);
@@ -173,14 +162,6 @@ export default function Filters() {
           sx={{ width: isMobile ? "100%" : "45%", mb: isMobile ? 1 : 0 }}
         >
           Apply Filters
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleReset}
-          sx={{ width: isMobile ? "100%" : "45%", mb: isMobile ? 1 : 0 }}
-        >
-          Reset Filters
         </Button>
       </Box>
     </Paper>

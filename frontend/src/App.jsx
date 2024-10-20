@@ -11,10 +11,11 @@ import { useEffect, useState } from "react";
 import Share from "./pages/Share";
 import Emails from "./pages/Emails";
 import Loader from "./components/Loader";
+import Profile from "./pages/Profile";
 
 function App() {
   const dispatch = useDispatch();
-  const { isUserLoading, isAuthenticated } = useSelector((state) => state.user);
+  const { user , isUserLoading, isAuthenticated } = useSelector((state) => state.user);
 
   const [isUserFetched, setIsUserFetched] = useState(false);
 
@@ -38,6 +39,7 @@ function App() {
           children: [
             { path: "", element: <Dashboard /> },
             { path: "/share", element: <Share /> },
+            { path: "/profile", element: <Profile /> },
           ],
         },
         {
@@ -58,6 +60,8 @@ function App() {
 
   return (
     <>
+      
+
       <RouterProvider router={router} />
     </>
   );
