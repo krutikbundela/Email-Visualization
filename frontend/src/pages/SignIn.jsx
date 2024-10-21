@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -28,43 +28,52 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const { user, isUserLoading, isAuthenticated } = useSelector(
-    (state) => state.user
-  );
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword = (event) => {
-    event.preventDefault();
-  };
-
-  useEffect(() => {
-    if(user && isAuthenticated){
-      navigate("/");
-    }
-  }, [])
-  
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const searchParams = new URLSearchParams(location.search);
   const redirectUrl = searchParams.get("redirect");
 
-  const handleSubmit = async (e) => {
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  useEffect(() => {
+    if (user && isAuthenticated) {
+      if (redirectUrl) {
+        navigate(decodeURIComponent(redirectUrl));
+      } else {
+        navigate("/");
+      }
+    }
+  }, [user, isAuthenticated, redirectUrl, navigate]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = { email, password };
 
-    dispatch(loginUser(userData));
+    // Basic validation
+    let valid = true;
 
-    if (redirectUrl) {
-      navigate(decodeURIComponent(redirectUrl));
+    if (!email) {
+      setEmailError(true);
+      valid = false;
     } else {
-      navigate("/");
+      setEmailError(false);
+    }
+
+    if (!password) {
+      setPasswordError(true);
+      valid = false;
+    } else {
+      setPasswordError(false);
+    }
+
+    if (valid) {
+      const userData = { email, password };
+      dispatch(loginUser(userData));
     }
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -92,22 +101,30 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            error={emailError}
+            helperText={emailError ? "Email is required" : ""}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <FormControl sx={{ mt: 1, width: "100%" }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
+          <FormControl
+            sx={{ mt: 1, width: "100%" }}
+            variant="outlined"
+            required
+          >
+            <InputLabel
+              error={passwordError}
+              htmlFor="outlined-adornment-password"
+            >
               Password
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
+              error={passwordError}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseUpPassword}
                     edge="end"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -117,6 +134,11 @@ export default function SignIn() {
               label="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError && (
+              <Typography variant="caption" color="error">
+                Password is required
+              </Typography>
+            )}
           </FormControl>
           <Button
             type="submit"
