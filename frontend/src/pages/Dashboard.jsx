@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Alert, Box, Button, Paper, Typography } from "@mui/material";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import Filters from "../components/Filters";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,10 @@ import { fetchData } from "../redux/dataSlice";
 import Charts from "../components/Charts";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import Loader from "../components/Loader";
-import { fetchDefaultPreferences, loadPreferences } from "../redux/preferenceSlice";
+import {
+  fetchDefaultPreferences,
+  loadPreferences,
+} from "../redux/preferenceSlice";
 import Cookies from "js-cookie";
 
 const Dashboard = () => {
@@ -16,29 +19,31 @@ const Dashboard = () => {
   const [isProcessed, setIsProcessed] = useState(false);
   const dispatch = useDispatch();
   const { data, isLoading } = useSelector((state) => state.data);
-  const { startDate, endDate, ageGroup, gender } = useSelector((state) => state.preferences);
-  const { user, isAuthenticated, isUserLoading, isUserError } = useSelector(
-    (state) => state.user
+  const { startDate, endDate, ageGroup, gender } = useSelector(
+    (state) => state.preferences
   );
 
-    useEffect(() => {
-      const savedPreferences = Cookies.get("preferences");
-      if (!savedPreferences) {
-        dispatch(fetchDefaultPreferences());
-        dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
-      } else {
-        dispatch(loadPreferences());
-        dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
-      }
-    }, [dispatch, startDate, endDate, ageGroup, gender]);
-
+  useEffect(() => {
+    const savedPreferences = Cookies.get("preferences");
+    if (!savedPreferences) {
+      dispatch(fetchDefaultPreferences());
+      dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
+    } else {
+      dispatch(loadPreferences());
+      dispatch(fetchData({ startDate, endDate, ageGroup, gender }));
+    }
+  }, [dispatch, startDate, endDate, ageGroup, gender]);
 
   useEffect(() => {
-    if (!isLoading && data.length > 0) {
-      const { totalFeatures, newFilteredData } = FilterData(data);
-      setTotalFeatures(totalFeatures);
-      setNewFilteredData(newFilteredData);
-      setIsProcessed(true);
+    if (!isLoading) {
+      if (data.length === 0) {
+        setIsProcessed(false);
+      } else {
+        const { totalFeatures, newFilteredData } = FilterData(data);
+        setTotalFeatures(totalFeatures);
+        setNewFilteredData(newFilteredData);
+        setIsProcessed(true);
+      }
     }
   }, [isLoading, data]);
 
@@ -62,9 +67,7 @@ const Dashboard = () => {
     return { totalFeatures, newFilteredData };
   };
 
-
-  const handleShare = () =>{
-
+  const handleShare = () => {
     const queryParams = new URLSearchParams({
       startDate: startDate,
       endDate: endDate,
@@ -79,7 +82,7 @@ const Dashboard = () => {
     navigator.clipboard.writeText(shareableURL).then(() => {
       alert("Shareable link copied to clipboard!");
     });
-  }
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -161,9 +164,7 @@ const Dashboard = () => {
                 fontWeight: "500",
               }}
             >
-              {`${formatDate(startDate)} TO ${formatDate(
-                endDate
-              )}`}
+              {`${formatDate(startDate)} TO ${formatDate(endDate)}`}
             </Typography>
           </Paper>
           <Paper
@@ -239,11 +240,29 @@ const Dashboard = () => {
         </Paper>
       </Box>
 
-      {isLoading || !isProcessed ? (
+      {isLoading ? (
         <Loader />
-      ) : (
+      ) : data && data.length > 0 && isProcessed ? (
         <Charts data={{ newFilteredData, totalFeatures }} />
+      ) : (
+        <Alert
+          severity="error"
+          sx={{
+            align:"center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100px",
+            width: "100%",
+            fontSize:"20px",
+            fontWeight:"500",
+            margin: "30px 0px",
+          }}
+        >
+          No data available. Please adjust your filters.
+        </Alert>
       )}
+
       <Filters />
     </>
   );
