@@ -46,9 +46,9 @@ export const loadUser = catchAsyncError(async (req, res, next) => {
 
 export const logout = catchAsyncError(async (req, res, next) => {
   res.cookie("token", null, {
-    expires: new Date(Date.now() - 1000), // Set expiry in the past
+    expires: new Date(Date.now() - 1000),
     httpOnly: true,
-    secure: true, // Ensure this is set the same as during login
+    secure: true,
     sameSite: "None",
   });
 
