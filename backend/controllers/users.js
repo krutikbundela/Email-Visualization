@@ -44,14 +44,16 @@ export const loadUser = catchAsyncError(async (req, res, next) => {
     });
 });
 
-export const logout = catchAsyncError(async (req,res,next) =>{
-    res.cookie("token", null, {
-      expires: new Date(Date.now()),
-      httpOnly: true,
-    });
+export const logout = catchAsyncError(async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now() - 1000), // Set expiry in the past
+    httpOnly: true,
+    secure: true, // Ensure this is set the same as during login
+    sameSite: "None",
+  });
 
-    res.status(200).json({
-      success: true,
-      message: "Logged Out",
-    });
+  res.status(200).json({
+    success: true,
+    message: "Logged Out",
+  });
 });
