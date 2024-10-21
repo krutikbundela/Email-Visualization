@@ -2,15 +2,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { loginUser } from "../redux/userSlice";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import {
   FormControl,
   IconButton,
@@ -20,7 +19,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -29,6 +28,10 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const { user, isUserLoading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -39,6 +42,13 @@ export default function SignIn() {
   const handleMouseUpPassword = (event) => {
     event.preventDefault();
   };
+
+  useEffect(() => {
+    if(user && isAuthenticated){
+      navigate("/");
+    }
+  }, [])
+  
 
   const searchParams = new URLSearchParams(location.search);
   const redirectUrl = searchParams.get("redirect");
@@ -119,7 +129,7 @@ export default function SignIn() {
           <Grid container>
             <Grid>
               <Link
-                href={
+                to={
                   redirectUrl
                     ? `/signup?redirect=${encodeURIComponent(redirectUrl)}`
                     : "/signup"

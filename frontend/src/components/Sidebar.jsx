@@ -66,9 +66,8 @@ export default function Sidebar() {
   };
 
   const handleLogOut = () =>{
-    dispatch(logoutUser()).finally(()=>{
+    dispatch(logoutUser());
       navigate("/signin");
-    })
   }
 
   return (

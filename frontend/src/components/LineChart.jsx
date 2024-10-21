@@ -32,20 +32,23 @@ ChartJS.register(
 const LineChart = ({ data, selectedFeature }) => {
   const { newFilteredData, totalFeatures } = data || {};
 
-  const formattedDates = newFilteredData.map((item) =>
+  const sortedData = [...newFilteredData].sort((a, b) =>
+    dayjs(a.day).isAfter(dayjs(b.day)) ? 1 : -1
+  );
+
+  const formattedDates = sortedData.map((item) =>
     dayjs(item.day, "YYYY-MM-DD").toDate()
   );
 
   const colorPalette = [
-    "#071952", 
-    "#088395", 
-    "#D1495B", 
-    "#EDAE49", 
-    "#00798C", 
-    "#30638E", 
+    "#071952",
+    "#088395",
+    "#D1495B",
+    "#EDAE49",
+    "#00798C",
+    "#30638E",
   ];
 
-  
   const lineChartData = {
     labels: formattedDates,
     datasets: Object.keys(totalFeatures || {})
@@ -58,57 +61,56 @@ const LineChart = ({ data, selectedFeature }) => {
       })),
   };
 
- const lineChartOptions = {
-   responsive: true,
-   scales: {
-     x: {
-       type: "time",
-       title: {
-         display: true,
-         text: "Date",
-       },
-       time: {
-         unit: "day",
-         tooltipFormat: "MMM D, YYYY",
-       },
-     },
-     y: {
-       title: {
-         display: true,
-         text: "Sales",
-       },
-     },
-   },
-   plugins: {
-     zoom: {
-       zoom: {
-         wheel: {
-           enabled: true,
-           speed: 0.05, 
-         },
-         pinch: {
-           enabled: true,
-           speed: 0.05, 
-         },
-         mode: "xy",
-         rangeMin: {
-           x: null,
-           y: 0, 
-         },
-         rangeMax: {
-           x: null,
-           y: 100, 
-         },
-       },
-       pan: {
-         enabled: true,
-         mode: "xy",
-         speed: 10, 
-       },
-     },
-   },
- };
-
+  const lineChartOptions = {
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        title: {
+          display: true,
+          text: "Date",
+        },
+        time: {
+          unit: "day",
+          tooltipFormat: "MMM D, YYYY",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Sales",
+        },
+      },
+    },
+    plugins: {
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+            speed: 0.05,
+          },
+          pinch: {
+            enabled: true,
+            speed: 0.05,
+          },
+          mode: "xy",
+          rangeMin: {
+            x: null,
+            y: 0,
+          },
+          rangeMax: {
+            x: null,
+            y: 100,
+          },
+        },
+        pan: {
+          enabled: true,
+          mode: "xy",
+          speed: 10,
+        },
+      },
+    },
+  };
 
   return <Line data={lineChartData} options={lineChartOptions} />;
 };

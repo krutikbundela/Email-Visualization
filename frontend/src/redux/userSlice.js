@@ -27,7 +27,11 @@ export const loginUser = createAsyncThunk(
       console.log("response:", response);
       return response.data.user;
     } catch (error) {
-      return rejectWithValue(error.response.data.message || error.message);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "An unknown error occurred";
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -53,7 +57,6 @@ export const logoutUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data.message || error.message);
     }
-    
   }
 );
 
@@ -98,7 +101,7 @@ export const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         console.log(".addCase ~ action:", action);
-        state.isUserError = action.payload;
+        state.isUserError = action.payload || action.error.message;
         state.isUserLoading = false;
         state.isAuthenticated = false;
       })
